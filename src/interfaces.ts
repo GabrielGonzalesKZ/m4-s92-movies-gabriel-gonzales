@@ -11,4 +11,4 @@ export interface iMovie extends iMovieRequest {
 	id: number;
 }
 
-export type tMovieResponse = QueryResult<iMovie>
+export type MovieResponse = QueryResult<iMovie>

@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { QueryConfig } from 'pg';
 import format from 'pg-format';
 import { client } from './database';
-import { iMovie, iMovieRequest, tMovieResponse } from './interfaces';
+import { iMovie, iMovieRequest, MovieResponse } from './interfaces';
 
 export const createMovie = async (request: Request,response: Response): Promise<Response> => {
 	const movieDataRequest: iMovieRequest = request.body;
@@ -29,7 +29,7 @@ export const createMovie = async (request: Request,response: Response): Promise<
 		Object.values(movieData)
 	);
 
-	const queryResult: tMovieResponse = await client.query(queryString);
+	const queryResult: MovieResponse = await client.query(queryString);
 	const newMovie: iMovie = queryResult.rows[0];
 
 	return response.status(201).json(newMovie);
@@ -90,7 +90,7 @@ export const listMovies = async (request: Request,response: Response): Promise<R
 		values: [perPage, page],
 	};
 
-	const queryResult: tMovieResponse = await client.query(queryConfig);
+	const queryResult: MovieResponse = await client.query(queryConfig);
 
 	if (queryResult.rowCount < perPage) {
 		nextPage = null;
